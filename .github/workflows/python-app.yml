@@ -29,30 +29,28 @@ jobs:
         python -m unittest discover
 
   security_checks:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-
-    - name: SAST Scan (Bandit)
-      run: |
-        pip install bandit
-        bandit -r .
-
-    - name: Dependency Vulnerabilities Check (Safety)
-      run: |
-        pip install safety
-        safety check
-
-    - name: Secrets Scan
-      uses: yochay/security-secrets-scanner-action@v1.0.0
-
-    - name: Fail Pull Request on Warning
-      if: failure()
-      run: exit 1
+      runs-on: ubuntu-latest
+  
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+  
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+  
+      - name: SAST Scan (Bandit)
+        run: |
+          pip install bandit
+          bandit -r .
+  
+      - name: Dependency Vulnerabilities Check (Safety)
+        run: |
+          pip install safety
+          safety check
+  
+      - name: Secrets Scan (TruffleHog)
+        uses: trufflesecurity/trufflehog@v3
+        with:
+          scanDirectory: .
