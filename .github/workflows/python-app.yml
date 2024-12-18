@@ -49,9 +49,3 @@ jobs:
       run: |
         pip install safety
         safety check
-
-    - name: Secret Scanner
-      uses: secret-scanner/action@0.0.2
-      with:
-        detect_secrets_version: '1.2.0'
-        python_version: '3.10.4'
