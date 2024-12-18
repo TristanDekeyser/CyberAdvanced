@@ -50,4 +50,4 @@ jobs:
     - name: Dependency Vulnerabilities Check (Safety)
       run: |
         pip install safety
-        safety check
+        safety scan
